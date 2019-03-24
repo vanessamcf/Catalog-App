@@ -1,0 +1,30 @@
+{% extends 'principal.html' %}
+{% block content %}
+{% include "header.html" %}
+	<div class="row divider green">
+		<div class="col-md-12"></div>
+	</div>
+	<div class="row banner menu">
+		<div class="col-md-11 col-md-offset-1 padding-none">
+	<h1>Edit Item:  {{items.item_name}}</h1>
+	</div>
+	</div>
+	<div class="row">
+		<div class="col-md-6 col-md-offset-1 padding-top">
+
+			<form action="{{url_for('EditItem', category_id = items.category.id, item_name = items.item_name)}}" method = 'post'>
+			<p>Item Name:<br>
+			<input type ='text' size='30' name='name' placeholder="Enter a name for your item"></p>
+			<p>Description:<br>
+			<textarea name = 'description' rows='5' cols='40' > </textarea></p>
+            
+			<input type='submit' value='Edit'>
+		
+			<a href = "{{url_for('ShowItem', category_name = items.category.name, item_name = items.item_name)}}">  </a>
+				<input type='submit' value = 'Cancel'>
+	
+				
+			</div>
+			</form>
+
+		{% endblock %}           

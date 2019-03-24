@@ -1,0 +1,22 @@
+{% extends "principal.html" %}
+{% block content %}
+{% include "header.html" %}
+<div class="row divider green">
+		<div class="col-md-12"></div>
+	</div>
+	<div class="row banner menu">
+		<div class="col-md-11 col-md-offset-1 padding-none">
+		{% for item in items %}
+			<a href = "{{url_for('ShowItem', category_name = item.category.name, item_name = item.item_name)}}">  </a>
+			<h1>{{item.item_name}}</h1>
+			</a>
+			
+		</div>
+	</div>	
+	<h4>{{item.description}}</h4>
+	<div class="row padding-top padding-bottom">
+		<div class="col-md-1"></div>
+		<div class="col-md-11 padding-none">
+		<a href = "{{url_for('ShowItem', category_name = item.category.name, item_name = item.item_name)}}">  </a>
+{% endfor %}
+{% endblock %}

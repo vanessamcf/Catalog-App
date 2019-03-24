@@ -1,0 +1,44 @@
+{% extends "principal.html" %}
+{% block content %}
+{% include "header.html" %}
+<div class="row divider green">
+		<div class="col-md-12"></div>
+	</div>
+	<div class="row banner menu">
+		<div class="col-md-11 col-md-offset-1 padding-none">
+				<h1>Category: {{category.name}}</h1>
+	</div>
+	</div>
+	<div class = 'flash'>
+		      {% with messages = get_flashed_messages() %}
+      {% if messages %}
+          
+        <ul>
+        {% for message in messages %}
+            <li> <strong> {{ message }} </strong> </li>
+        {% endfor %}
+        </ul>
+        {% endif %}
+    {% endwith %}
+
+	</div>
+	<div>
+  <div class="col-md-12 text-left">
+		<a href="{{url_for('NewItem') }}">Click Here for Add Item</a> 
+	</div>
+		{% for item in items %}
+			<a href = "{{url_for('AllItems', category_id = item.category.id)}}">
+			<h4>{{item.item_name}}</h4> </a> 
+			
+			<h4>{{item.description}}</h4>
+			</a>
+				<div class="row">
+				<div class="col-md-10 category-list">
+                   	<a href = "{{url_for('ShowItem',category_name = item.category.name, item_name = item.item_name)}}"> </a>
+                    <a href="{{url_for('EditItem', category_id = item.category.id, item_name=item.item_name) }}">Edit</a> | 
+                    <a href="{{url_for('DeleteItem', category_name = item.category.name, item_name=item.item_name ) }}">Delete</a>
+						</div>
+					<div class="col-md-1"></div>
+				</div>
+		{% endfor %}
+{% endblock %}

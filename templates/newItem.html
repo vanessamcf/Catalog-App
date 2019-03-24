@@ -1,0 +1,32 @@
+{% extends 'principal.html' %}
+{% block content %}
+{% include "header.html" %}
+	<div class="row divider green">
+		<div class="col-md-12"></div>
+	</div>
+	<div class="row banner menu">
+		<div class="col-md-11 col-md-offset-1 padding-none">
+	<h1>New Item</h1>
+	</div>
+	</div>
+	<div class="row">
+	<div class="col-md-6 col-md-offset-1 padding-top">
+    <form action="{{url_for('NewItem')}}" method = 'POST'>	
+	<label for="category" class="label"><p>Category</p></label>
+	<select name="category" > 
+        {% for category in categories  %}
+            <option value="{{ category.id }}">{{ category.name }}</option>
+        {% endfor %}
+	</select>
+        <p>Item Name:<br>
+        <input type ='text' size='30' name='name' placeholder="Enter a name for your item"></p>
+        <p>Description:<br>
+        <textarea name = 'description' rows='5' cols='40' > </textarea></p>
+        <input type='submit' value='Create'>
+            
+        <input type='submit' value = 'Cancel'>
+    </form>
+    </div>
+    </div>
+   
+{% endblock %}	
