@@ -1,3 +1,4 @@
+#! /usr/bin/python
 # -*- coding: utf-8 -*-
 from db_setup import Base, User, Categories, Items
 from flask import Flask, render_template, request
@@ -269,15 +270,15 @@ def AllItemsJSON(category_name):
 
 # JSON for Show a Item.
 @app.route(
-    '/catalog/<category_name>/<item_name>/JSON',
+    '/catalog/<item_id>/JSON',
+#    '/catalog/<category_name>/<item_name>/JSON',
     methods=[
         'GET',
         'POST'])
-def showItemJSON(category_name, item_name):
-    if request.method == 'GET':
-        category = session.query(Categories).filter_by(name = category_name).first()
-        items = session.query(Items).filter_by(item_name = item_name).first()  
-    return jsonify(TItems = [items.serialize]) 
+def showItemJSON(item_id):
+  #  category = session.query(Categories).filter_by(name=category_name).first()
+    items = session.query(Items).filter_by(item_id = id).first() 
+    return jsonify(Item=[item_id.serialize])
 
 
 # Navegação no Catálogo App
