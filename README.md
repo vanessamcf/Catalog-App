@@ -1,12 +1,12 @@
-Catalog App
+#Catalog App
 
-Technologies Used
+###Technologies Used
 
 Python 2.7 - Language the project is coded in
 Vagrant - For a dev VM
 VirtualBox - Required for Vagrant
 
-System setup and how to view this project
+###System setup and how to view this project
 Download and install Vagrant
 Download and install Virtual Box
 
@@ -29,4 +29,4 @@ Returns JSON of all the items in a specific category
 
 Returns JSON of item setails in a specific category
 
-/catalog/<category_name>/<item_name>/JSON'
+/catalog/<item_id>/JSON'

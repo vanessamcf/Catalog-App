@@ -5,8 +5,9 @@ from sqlalchemy import create_engine
 
 Base = declarative_base()
 
+
 class User(Base):
-    __tablename__='user'
+    __tablename__ = 'user'
 
     id = Column(Integer, primary_key=True)
     name = Column(String(250), nullable=False)
@@ -17,14 +18,15 @@ class User(Base):
     def serialize(self):
         """Return object data in easily serializeable format"""
         return {
-            'id' : self.id,
+            'id': self.id,
             'name': self.name,
             'email': self.email,
             'picture': self.picture,
         }
 
+
 class Categories(Base):
-    __tablename__= 'categories'
+    __tablename__ = 'categories'
 
     id = Column(Integer, primary_key=True)
     name = Column(String(250), nullable=False)
@@ -35,11 +37,11 @@ class Categories(Base):
         return {
             'id': self.id,
             'name': self.name,
-            
         }
 
+
 class Items(Base):
-    __tablename__='items'
+    __tablename__ = 'items'
 
     id = Column(Integer, primary_key=True)
     item_name = Column(String(80), nullable=False)
@@ -57,12 +59,12 @@ class Items(Base):
             'id': self.id,
             'item_name': self.item_name,
             'category_id': self.category_id,
-            'category_name':self.category_name,
+            'category_name': self.category_name,
             'description': self.description,
             'user_id': self.user_id,
         }
 
+
 engine = create_engine('sqlite:///categoriesanditems.db')
 Base.metadata.create_all(engine)
-print('Congrats, your DB was successfully set up!') 
-
+print('Congrats, your DB was successfully set up!')

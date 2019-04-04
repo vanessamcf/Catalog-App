@@ -2,15 +2,13 @@
 # -*- coding: utf-8 -*-
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from db_setup import  User, Base, Categories, Items
-#from os import remove
+from db_setup import User, Base, Categories, Items
+
 
 engine = create_engine('sqlite:///categoriesanditems.db')
 Base.metadata.bind = engine
 DBSession = sessionmaker(bind=engine)
 session = DBSession()
-
-#Categories DB
 
 category_1 = Categories(name="IT")
 
@@ -58,17 +56,17 @@ session.add(category_9)
 session.commit()
 
 # User Test
-user1 = User(name="Ally Jhonson", email="test@email.com",picture='https://www.google.com/url?sa=i&rct=j&q=&esrc=s&source=images&cd=&cad=rja&uact=8&ved=2ahUKEwjf-9DYnNXgAhWgErkGHSkjCJMQjRx6BAgBEAU&url=http%3A%2F%2Fwww.adorocinema.com%2Ffilmes%2Ffilme-196960%2Fcriticas-adorocinema%2F&psig=AOvVaw24a-TOD_INJEKvLyi90Tvt&ust=1551127044077669')
+user1 = User(name="Ally Jhonson", email="test@email.com", picture='https://www.google.com/url?sa=i&rct=j&q=&esrc=s&source=images&cd=&cad=rja&uact=8&ved=2ahUKEwjf-9DYnNXgAhWgErkGHSkjCJMQjRx6BAgBEAU&url=http%3A%2F%2Fwww.adorocinema.com%2Ffilmes%2Ffilme-196960%2Fcriticas-adorocinema%2F&psig=AOvVaw24a-TOD_INJEKvLyi90Tvt&ust=1551127044077669')  # noqa
 
 session.add(user1)
 session.commit
 
 # Add Item
-item1 = Items(item_name="Notebook", category_id = "1", description="Avell", user_id= "0")
+item1 = Items(item_name="Notebook", category_id="1", description="Avell",
+              user_id="0")
 
 session.add(item1)
 session.commit()
 
 
-
-print ("Categories added!")
+print("Categories added!")

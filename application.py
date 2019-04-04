@@ -31,6 +31,7 @@ Base.metadata.bind = engine
 DBSession = sessionmaker(bind=engine)
 session = DBSession()
 
+
 # Autenticação e Autorização
 @app.route('/login')
 def showLogin():
@@ -84,7 +85,8 @@ def fbconnect():
     output += '!</h1>'
     output += '<img src="'
     output += login_session['picture']
-    output += ' " style = "width: 300px; height: 300px;border-radius:150px;-webkit-border-radius: 150px;-moz-border-radius: 150px;"> '
+    output += \
+        ' " style = "width: 300px; height: 300px;border-radius:150px;-webkit-border-radius: 150px;-moz-border-radius: 150px;"> '  # noqa
 
     flash("Now logged in as %s" % login_session['username'])
     return output
@@ -98,8 +100,27 @@ def fbdisconnect():
     url = 'https://graph.facebook.com/%s/permissions?access_token=%s' % (
         facebook_id, access_token)
     h = httplib2.Http()
-    result = h.request(url, 'DELETE')[1]
+    result = h.request(url, 'GET')[0]
     return "you have been logged out"
+
+
+@app.route('/disconnect')
+def disconnect():
+    if 'provider' in login_session:
+        if login_session['provider'] == 'facebook':
+            fbdisconnect()
+            del login_session['facebook_id']
+
+        del login_session['username']
+        del login_session['email']
+        del login_session['picture']
+        del login_session['user_id']
+        del login_session['provider']
+        flash("You have successfully been logged out.")
+        return redirect(url_for('AllCatalog'))
+    else:
+        flash("You were not logged in to begin with!")
+        redirect(url_for('AllCatalog'))
 
 
 @app.route('/gconnect', methods=['GET', 'POST'])
@@ -186,7 +207,7 @@ def gconnect():
     output += '!</h1>'
     output += '<img src="'
     output += login_session['picture']
-    output += ' " style = "width: 300px; height: 300px;border-radius: 150px;-webkit-border-radius: 150px;-moz-border-radius: 150px;"> '
+    output += ' " style = "width: 300px; height: 300px;border-radius: 150px;-webkit-border-radius: 150px;-moz-border-radius: 150px;"> '  # noqa
     flash("You are now logged in as %s" % login_session['username'])
     print("Done!")
     return output
@@ -216,6 +237,7 @@ def getUserID(email):
         return user.id
     except BaseException:
         return None
+
 
 # DISCONNECT - Revoke a current user's token and reset their login_session
 @app.route('/gdisconnect')
@@ -251,12 +273,14 @@ def gdisconnect():
         response.headers['Content-Type'] = 'application/json'
         return response
 
+
 # JSON for Show All Categories.
 @app.route('/catalog/category/JSON', methods=['GET', 'POST'])
 def AllCategoriesJSON():
     if request.method == 'GET':
         category = session.query(Categories).order_by(asc(Categories.name))
         return jsonify(category=[category.serialize for category in category])
+
 
 # JSON for Show All Items of a Category.
 @app.route('/catalog/<category_name>/JSON', methods=['GET', 'POST'])
@@ -271,13 +295,11 @@ def AllItemsJSON(category_name):
 # JSON for Show a Item.
 @app.route(
     '/catalog/<item_id>/JSON',
-#    '/catalog/<category_name>/<item_name>/JSON',
     methods=[
         'GET',
         'POST'])
 def showItemJSON(item_id):
-  #  category = session.query(Categories).filter_by(name=category_name).first()
-    items = session.query(Items).filter_by(item_id = id).first() 
+    item = session.query(Items).filter_by(item_id=id).first()
     return jsonify(Item=[item_id.serialize])
 
 
@@ -339,7 +361,10 @@ def EditItem(category_id, item_name):
     if 'username' not in login_session:
         return redirect('/login')
     edit = session.query(Items).filter_by(item_name=item_name).first()
+    user_id = login_session.get('user_id')
     if request.method == 'POST':
+        if user_id is None or user_id != edit.user_id:
+            return "You are not authorized to edit this item"
         if request.form['name']:
             edit.item_name = request.form['name']
         if request.form['description']:
@@ -372,7 +397,10 @@ def DeleteItem(category_name, item_name):
         return redirect('/login')
     category = session.query(Categories).filter_by(name=category_name).first()
     delete = session.query(Items).filter_by(item_name=item_name).first()
+    user_id = login_session.get('user_id')
     if request.method == 'POST':
+        if user_id is None or user_id != delete.user_id:
+            return "You are not authorized to edit this item"
         session.delete(delete)
         session.commit()
         return redirect(

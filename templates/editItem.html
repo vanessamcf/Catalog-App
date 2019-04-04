@@ -14,10 +14,11 @@
 
 			<form action="{{url_for('EditItem', category_id = items.category.id, item_name = items.item_name)}}" method = 'post'>
 			<p>Item Name:<br>
-			<input type ='text' size='30' name='name' placeholder="Enter a name for your item"></p>
+			<input type ='text' size='30' name='name' value="{{items.item_name}}"></p>
 			<p>Description:<br>
-			<textarea name = 'description' rows='5' cols='40' > </textarea></p>
-            
+			<input type = 'text' size= '50' name = 'description' value= "{{items.description }}"></input></p>
+          
+			
 			<input type='submit' value='Edit'>
 		
 			<a href = "{{url_for('ShowItem', category_name = items.category.name, item_name = items.item_name)}}">  </a>
