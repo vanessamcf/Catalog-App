@@ -65,6 +65,6 @@ class Items(Base):
         }
 
 
-engine = create_engine('sqlite:///categoriesanditems.db')
+engine = engine = create_engine('postgresql://catalog:password@localhost/catalog')
 Base.metadata.create_all(engine)
 print('Congrats, your DB was successfully set up!')
