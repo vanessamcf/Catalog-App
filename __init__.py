@@ -24,7 +24,7 @@ CLIENT_ID = json.loads(open('client_secrets.json', 'r')
 APPLICATION_NAME = "Formigoni Store - Catalog Log"
 
 # Connect to Database and create database session
-engine = engine = create_engine('postgresql://catalog:password@localhost/catalog',
+engine = create_engine('postgresql://catalog:53092@localhost/catalog',
                        connect_args={'check_same_thread': False})
 Base.metadata.bind = engine
 
