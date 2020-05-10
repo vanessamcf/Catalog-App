@@ -1,32 +1,32 @@
-#Catalog App
+# Catalog App
 
-###Technologies Used
+### Technologies Used
 
-Python 2.7 - Language the project is coded in
-Vagrant - For a dev VM
-VirtualBox - Required for Vagrant
+**Python 2.7** - Language the project is coded in
+**Vagrant** - For a dev VM
+**VirtualBox** - Required for Vagrant
 
-###System setup and how to view this project
-Download and install Vagrant
-Download and install Virtual Box
+### System setup and how to view this project
+1- Download and install Vagrant
+2- Download and install Virtual Box
+3- Clone this repository
+4- Run `vagrant up` command to start up the VM
+5- Run `vagrant ssh` command to log into the VM.
+6- `cd /vagrant` to change to your vagrant directory
+7- Move inside the catalog folder `cd /vagrant/Projeto - Catalogo App`
+8- Initialize the database $ `python db_setup.py`
+9- Populate the database with some initial data $ `python basic.py`
+10- Run `python application.py`
+11- Browse the App at this URL http://localhost:8000/catalog
 
-Clone this repository
-Run vagrant up command to start up the VM
-Run vagrant ssh command to log into the VM.
-cd /vagrant to change to your vagrant directory
-Move inside the catalog folder cd /vagrant/Projeto - Catalogo App
-Initialize the database $ python db_setup.py
-Populate the database with some initial data $ python basic.py
-Run python application.py
-Browse the App at this URL http://localhost:8000/catalog
-
-JSON endpoints:
+**JSON endpoints**:
 Returns JSON of all categories
-/catalog/category/JSON
+`/catalog/category/JSON`
 
 Returns JSON of all the items in a specific category
-/catalog/<category_name>/JSON
+`/catalog/<category_name>/JSON`
 
 Returns JSON of item setails in a specific category
 
-/catalog/<item_id>/JSON'
+`/catalog/<item_id>/JSON'`
+
